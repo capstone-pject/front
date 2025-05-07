@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from "./Register.module.css"
+import "./Register.style.css"
 
 const Register = () => {
   const [userId, setUserId] = useState("");

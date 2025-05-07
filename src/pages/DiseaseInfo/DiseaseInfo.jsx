@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./DiseaseInfo.module.css"
+import "./DiseaseInfo.style.css"
 
 const DiseaseInfo = () => {
   return (

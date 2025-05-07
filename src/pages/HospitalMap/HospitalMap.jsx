@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./HospitalMap.module.css"
+import "./HospitalMap.style.css"
 
 const HospitalMap = () => {
   return (

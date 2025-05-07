@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./PillCalendar.module.css"
+import "./PillCalendar.style.css"
 import counterStore from '../../stores/counterStore';
 
 const PillCalendar = () => {
