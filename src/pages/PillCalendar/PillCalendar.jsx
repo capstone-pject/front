@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./PillCalendar.module.css"
+import "./PillCalendar.style.css"
 import counterStore from '../../stores/counterStore';
 
 const PillCalendar = () => {
@@ -7,7 +7,7 @@ const PillCalendar = () => {
 
   return (
     <div>
-      <div className={styles.example}>Hello</div>
+      <div className="example">Hello</div>
       <h1>count:{count}</h1>
       <button onClick={increase}>inc</button>
       <button onClick={()=>increaseBy(10)}>10inc</button>
