@@ -7,7 +7,7 @@ const PillCalendar = () => {
 
   return (
     <div>
-      <div className={styles.example}>Hello</div>
+      <div className="example">Hello</div>
       <h1>count:{count}</h1>
       <button onClick={increase}>inc</button>
       <button onClick={()=>increaseBy(10)}>10inc</button>

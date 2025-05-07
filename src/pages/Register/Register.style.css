@@ -6,19 +6,25 @@
     height:80vh
 }
 
-.loginTitle{
+.login-title{
     font-size: 3em;
 }
 
-.idInput{
+.id-input{
     font-size: 2em;
     border-radius: 0.4em;
     padding: 0.5em 0.5em;
     margin-bottom: 0.5em;
 }
 
-.passInput{
+.pass-input{
     font-size: 2em;
     border-radius: 0.4em;
     padding: 0.5em 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.login-button{
+    font-size: 1.5em;
+    padding: 0.4em 0.8em
 }
