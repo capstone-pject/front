@@ -6,6 +6,7 @@ import HospitalMap from './pages/HospitalMap/HospitalMap';
 import DiseaseInfo from './pages/DiseaseInfo/DiseaseInfo';
 import AppLayout from './layout/AppLayout';
 import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
 
 function App() {
   return (
