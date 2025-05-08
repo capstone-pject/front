@@ -28,7 +28,7 @@ const Register = () => {
 
     try {
       // 백엔드 API 엔드포인트 URL (실제 환경에 맞게 수정 필요)
-      const response = await fetch('/join', { // proxy 설정 참고'
+      const response = await fetch('/users/register', { // proxy 설정 참고'
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
