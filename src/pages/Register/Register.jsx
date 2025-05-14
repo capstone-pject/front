@@ -4,21 +4,21 @@ import useRegister from '../../hooks/useRegister';
 
 const Register = () => {
   const [userId, setUserId] = useState("");
-  const [pass,setPass] = useState("");
+  const [password,setPass] = useState("");
 
   const registerMutation = useRegister();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const userData = {userId,pass}
+    const userData = {userId,password}
     // registerMutation.mutate(userData)
     registerMutation.mutate(userData)
   }
 
   useEffect(()=>{
     console.log("userId",userId)
-    console.log("pass",pass)
-  },[userId,pass])
+    console.log("password",password)
+  },[userId,password])
 
   return (
     <div>

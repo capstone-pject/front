@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query"
 import api from "../utils/api";
 
 const registerUser = async(userData) => {
-    const {data} = await api.post('/api/users/register',userData)
+    const {data} = await api.post('/join',userData)
     return data;
 }
 
