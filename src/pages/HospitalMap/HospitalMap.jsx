@@ -3,7 +3,7 @@ import "./HospitalMap.style.css"
 const HospitalMap = () => {
   return (
     <div>
-      asdfasdf
+      vnvjafksjd
     </div>
   )
 }
