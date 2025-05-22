@@ -12,8 +12,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" elements={<AppLayout/>}>
-        <Route index element={<Homepage/>}/>
-        {/* <Route index element={<PillCalendar/>}/> */}
+        {/* <Route index element={<Homepage/>}/> */}
+        <Route index element={<HospitalMap/>}/>
         <Route path="/calendar" element={<PillCalendar/>}/>
         <Route path="/map" element={<HospitalMap/>}/>
         <Route path="/info" element={<DiseaseInfo/>}/>
