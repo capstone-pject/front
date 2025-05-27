@@ -1,3 +1,49 @@
-.example{
+/* .example{
     color: red;
+} */
+
+.calendar-page{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 16em;
+    padding-right: 16em;
+    /* background-color: black; */
+    padding-top: 4em;
 }
+
+.calendar-container{
+    /* width: 40%; */
+}
+
+.custom-calendar{
+    width: 40em;
+    /* height: 30em; */
+}
+
+.tile-design{
+    /* width: 6em; */
+    height: 6em;
+    border: 1px solid black;
+}
+
+
+.calendar-page .react-calendar__tile {
+    width: 6em;
+  position: relative;
+  border: 1px solid black;
+  /* border-radius: 8px; */
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.react-calendar__tile abbr {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 0.8em;
+}
+
+/* .react-calendar button{
+    border: 1px solid black
+} */

@@ -11,9 +11,9 @@ import Register from './pages/Register/Register';
 function App() {
   return (
     <Routes>
-      <Route path="/" elements={<AppLayout/>}>
-        <Route index element={<Homepage/>}/>
-        {/* <Route index element={<PillCalendar/>}/> */}
+      <Route path="/" element={<AppLayout/>}>
+        <Route index element={<PillCalendar/>}/>
+        {/* <Route index element={<Homepage/>}/> */}
         <Route path="/calendar" element={<PillCalendar/>}/>
         <Route path="/map" element={<HospitalMap/>}/>
         <Route path="/info" element={<DiseaseInfo/>}/>

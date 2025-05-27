@@ -1,0 +1,41 @@
+.navbar{
+    display:flex;
+    height: 5em;
+    background-color: #a0825d71;
+    justify-content: space-evenly;
+
+}
+
+.navbar-button-section{
+    display:flex;
+}
+
+.nav-button{
+    display:flex;
+    align-items: center;
+    border:none;
+    background-color: #a0825dbd;
+    border-radius: 1em;
+    margin: 0 0.6em;
+}
+
+.nav-button:hover{
+    background-color: #a0825d5b;
+}
+
+.nav-button:hover .nav-button-image{
+    opacity: 0.75;
+}
+
+.nav-button-image{
+    width: 3em;
+    margin-right: 0.5em;
+}
+
+.nav-button-title{
+    color:white;
+    font-weight: bold;
+}
+
+
+
