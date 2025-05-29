@@ -1,0 +1,102 @@
+.navbar{
+    display:flex;
+    height: 4.5em;
+    background-color: #a0825d71;
+    justify-content:space-between;
+    align-items: center;
+}
+
+.navbar-page-title{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #835d2fbd;
+    margin-left: 1em;
+}
+
+.navbar-page-title:hover{
+    cursor:pointer;
+}
+
+.navbar-button-section{
+    display:flex;
+}
+
+.nav-button{
+    display:flex;
+    align-items: center;
+    border:none;
+    background-color: #a0825dbd;
+    padding: 0.4em 0.8em;
+    border-radius: 1em;
+    margin: 0 0.6em;
+    cursor: pointer;
+}
+
+.nav-button:hover{
+    background-color: #a0825d5b;
+}
+
+.nav-button:hover .nav-button-image{
+    opacity: 0.75;
+}
+
+.nav-button-image{
+    height:2em;
+    margin-right: 0.5em;
+}
+
+.nav-button-title{
+    color:white;
+    font-weight: bold;
+}
+
+.nav-button-title-small{
+    width: 4em;
+}
+
+.navbar-navigate-section{
+    margin-right: 1em;
+}
+
+.navbar-login-button{
+    border:none;
+    background: none;
+    color: #8e7558bd;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.navbar-login-button:hover{
+    opacity: 0.5;
+}
+
+.footer{
+    margin-top: 4em;
+    border-top: 1px solid #a0825dbd;
+    height: 8em;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-first-row{
+    font-size: 0.9em;
+    font-weight: 700;
+    color: #835d2fbd;
+    margin-bottom: 1em;
+}
+
+.footer-second-row{
+    
+}
+
+.footer-sns-icon{
+    width: 1.3em;
+    margin: 0 0.4em;
+}
+
+.footer-sns-icon:hover{
+    cursor: pointer;
+    opacity:0.5;
+}

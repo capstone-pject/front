@@ -7,18 +7,20 @@ import DiseaseInfo from './pages/DiseaseInfo/DiseaseInfo';
 import AppLayout from './layout/AppLayout';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import OCRReader from './pages/OCRReader/OCRReader';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" elements={<AppLayout/>}>
-        <Route index element={<Homepage/>}/>
-        {/* <Route index element={<PillCalendar/>}/> */}
-        <Route path="/calendar" element={<PillCalendar/>}/>
-        <Route path="/map" element={<HospitalMap/>}/>
-        <Route path="/info" element={<DiseaseInfo/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
+      <Route path="/" element={<AppLayout/>}>
+        <Route index element={<PillCalendar/>}/>
+        {/* <Route index element={<Homepage/>}/> */}
+        <Route path="calendar" element={<PillCalendar/>}/>
+        <Route path="map" element={<HospitalMap/>}/>
+        <Route path="info" element={<DiseaseInfo/>}/>
+        <Route path="ocr" element={<OCRReader/>}/>
+        <Route path="login" element={<Login/>}/>
+        <Route path="register" element={<Register/>}/>
       </Route>
     </Routes>
   );
