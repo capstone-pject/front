@@ -13,7 +13,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout/>}>
-        <Route index element={<PillCalendar/>}/>
+        <Route index element={<Register/>}/>
         {/* <Route index element={<Homepage/>}/> */}
         <Route path="calendar" element={<PillCalendar/>}/>
         <Route path="map" element={<HospitalMap/>}/>

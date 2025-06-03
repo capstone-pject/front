@@ -1,25 +1,25 @@
 // MedicationCalendar.jsx
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import Modal from 'react-modal';
-import { v4 as uuidv4 } from 'uuid';
-import 'react-calendar/dist/Calendar.css';
-import "./PillCalendar.style.css"
+import React, {useState} from "react";
+import Calendar from "react-calendar";
+import Modal from "react-modal";
+import {v4 as uuidv4} from "uuid";
+import "react-calendar/dist/Calendar.css";
+import "./PillCalendar.style.css";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 const PillCalendar = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [medications, setMedications] = useState([]);
   const [formData, setFormData] = useState({
-    id: '',
-    name: '',
-    startDate: '',
-    endDate: '',
-    time: '',
-    dosage: '',
-    frequency: '',
-    memo: '',
+    id: "",
+    name: "",
+    startDate: "",
+    endDate: "",
+    time: "",
+    dosage: "",
+    frequency: "",
+    memo: "",
     reminder: false,
   });
   const [isEdit, setIsEdit] = useState(false);
@@ -30,14 +30,14 @@ const PillCalendar = () => {
       setIsEdit(true);
     } else {
       setFormData({
-        id: '',
-        name: '',
-        startDate: '',
-        endDate: '',
-        time: '',
-        dosage: '',
-        frequency: '',
-        memo: '',
+        id: "",
+        name: "",
+        startDate: "",
+        endDate: "",
+        time: "",
+        dosage: "",
+        frequency: "",
+        memo: "",
         reminder: false,
       });
       setIsEdit(false);
@@ -48,10 +48,10 @@ const PillCalendar = () => {
   const closeModal = () => setModalIsOpen(false);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const {name, value, type, checked} = e.target;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -62,7 +62,7 @@ const PillCalendar = () => {
         prev.map((med) => (med.id === formData.id ? formData : med))
       );
     } else {
-      setMedications([...medications, { ...formData, id: uuidv4() }]);
+      setMedications([...medications, {...formData, id: uuidv4()}]);
     }
     closeModal();
   };
@@ -75,7 +75,7 @@ const PillCalendar = () => {
   const isSameDay = (date1, date2) =>
     new Date(date1).toDateString() === new Date(date2).toDateString();
 
-  const tileContent = ({ date }) => {
+  const tileContent = ({date}) => {
     const medsToday = medications.filter((med) => {
       const start = new Date(med.startDate);
       const end = new Date(med.endDate);
@@ -85,16 +85,18 @@ const PillCalendar = () => {
     return (
       <div className="tile-inner">
         <div className="tile-date">{date.getDate()}</div>
-        {medsToday.map((med) => (
-          <div
-            key={med.id}
-            className="pill-box"
-            onClick={() => openModal(med)}
-            title="약 수정/삭제"
-          >
-            💊{med.name}
-          </div>
-        ))}
+        <div className="pill-scroll-area">
+          {medsToday.map((med) => (
+            <div
+              key={med.id}
+              className="pill-box"
+              onClick={() => openModal(med)}
+              title="약 수정/삭제"
+            >
+              💊{med.name}
+            </div>
+          ))}
+        </div>
       </div>
     );
   };
@@ -110,32 +112,98 @@ const PillCalendar = () => {
         <Calendar
           tileContent={tileContent}
           calendarType="gregory"
-          formatDay={() => ''}
+          formatDay={() => ""}
         />
       </div>
 
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="약 등록">
-        <h3 className="medication-modal-title">{isEdit ? '약 정보 수정' : '약 정보 입력'}</h3>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="약 등록"
+      >
+        <h3 className="medication-modal-title">
+          {isEdit ? "약 정보 수정" : "약 정보 입력"}
+        </h3>
         <form className="medication-form" onSubmit={handleSubmit}>
-          <input className="medication-input" name="name" placeholder="약 이름" value={formData.name} onChange={handleChange} required />
-          <input className="medication-input" name="startDate" type="date" value={formData.startDate} onChange={handleChange} required />
-          <input className="medication-input" name="endDate" type="date" value={formData.endDate} onChange={handleChange} required />
-          <input className="medication-input" name="time" type="time" value={formData.time} onChange={handleChange} />
-          <input className="medication-input" name="dosage" placeholder="복용량" value={formData.dosage} onChange={handleChange} />
-          <input className="medication-input" name="frequency" placeholder="복용 주기" value={formData.frequency} onChange={handleChange} />
-          <textarea className="medication-textarea" name="memo" placeholder="메모" value={formData.memo} onChange={handleChange}></textarea>
+          <input
+            className="medication-input"
+            name="name"
+            placeholder="약 이름"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="medication-input"
+            name="startDate"
+            type="date"
+            value={formData.startDate}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="medication-input"
+            name="endDate"
+            type="date"
+            value={formData.endDate}
+            onChange={handleChange}
+            required
+          />
+          <input
+            className="medication-input"
+            name="time"
+            type="time"
+            value={formData.time}
+            onChange={handleChange}
+          />
+          <input
+            className="medication-input"
+            name="dosage"
+            placeholder="복용량"
+            value={formData.dosage}
+            onChange={handleChange}
+          />
+          <input
+            className="medication-input"
+            name="frequency"
+            placeholder="복용 주기"
+            value={formData.frequency}
+            onChange={handleChange}
+          />
+          <textarea
+            className="medication-textarea"
+            name="memo"
+            placeholder="메모"
+            value={formData.memo}
+            onChange={handleChange}
+          ></textarea>
           <label className="medication-label">
-            <input type="checkbox" name="reminder" checked={formData.reminder} onChange={handleChange} />
+            <input
+              type="checkbox"
+              name="reminder"
+              checked={formData.reminder}
+              onChange={handleChange}
+            />
             알림 받기
           </label>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <button className="medication-submit-btn" type="submit">{isEdit ? '수정' : '등록'}</button>
+          <div style={{display: "flex", gap: "10px"}}>
+            <button className="medication-submit-btn" type="submit">
+              {isEdit ? "수정" : "등록"}
+            </button>
             {isEdit && (
-              <button type="button" className="medication-cancel-btn" onClick={handleDelete}>삭제</button>
+              <button
+                type="button"
+                className="medication-cancel-btn"
+                onClick={handleDelete}
+              >
+                삭제
+              </button>
             )}
           </div>
         </form>
-        <button className="medication-cancel-btn" onClick={closeModal}>취소</button>
+        <button className="medication-cancel-btn" onClick={closeModal}>
+          취소
+        </button>
       </Modal>
     </div>
   );

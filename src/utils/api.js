@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const api = axios.create({
-    baseURL: "",
+    baseURL: "http://localhost:8080",
     headers:{
         Accept:"application/json"
     }
@@ -25,3 +25,5 @@ axios.interceptors.response.use(function (response) {
     // 응답 오류가 있는 작업 수행
     return Promise.reject(error);
   });
+
+export default api;
