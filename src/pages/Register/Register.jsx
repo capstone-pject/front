@@ -4,9 +4,10 @@ import useRegister from "../../hooks/user/useRegister";
 
 const Register = () => {
   const [formData, setFormData] = useState({
+    // userInfoId: 0
     userId: "",
     password: "",
-    birthDate: "",
+    birth: "",
   });
   const registerMutation = useRegister();
 
@@ -58,7 +59,7 @@ const Register = () => {
           <input
             type="date"
             onChange={handleChange}
-            name="birthDate"
+            name="birth"
             className="register-input"
             required
           />

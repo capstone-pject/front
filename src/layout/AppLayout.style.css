@@ -43,6 +43,7 @@
 .nav-button-image{
     height:2em;
     margin-right: 0.5em;
+    pointer-events: auto;
 }
 
 .nav-button-title{
