@@ -22,15 +22,15 @@ const AppLayout = () => {
 
   const navigate = useNavigate();
 
-  const handleNavbarButton = (e) => {
-    console.log(e);
-    if(e==="병원지도") {
+  const handleNavbarButton = (buttonTitle) => {
+    console.log(buttonTitle);
+    if(buttonTitle==="병원지도") {
       navigate("/map");
-    }else if(e==="약 달력") {
+    }else if(buttonTitle==="약 달력") {
       navigate("/calendar");
-    }else if(e==="약 알아보기") {
+    }else if(buttonTitle==="약 알아보기") {
       navigate("/info"); 
-    }else if(e==="사진으로 약 찾기") {
+    }else if(buttonTitle==="사진으로 약 찾기") {
       navigate("/ocr");
     }
   }

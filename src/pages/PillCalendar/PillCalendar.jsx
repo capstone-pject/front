@@ -1,28 +1,69 @@
 // MedicationCalendar.jsx
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Calendar from "react-calendar";
 import Modal from "react-modal";
 import {v4 as uuidv4} from "uuid";
 import "react-calendar/dist/Calendar.css";
 import "./PillCalendar.style.css";
+import userStore from "../../stores/userStore";
+import useAddSchedule from "../../hooks/calendar/useAddSchedule";
+import useUserSchedule from "../../hooks/calendar/useUserSchedule";
+import useUpdateSchedule from "../../hooks/calendar/useUpdateSchedule";
+import useDeleteSchedule from "../../hooks/calendar/useDeleteSchedule";
 
 Modal.setAppElement("#root");
 
 const PillCalendar = () => {
+  const {user} = userStore();
+  const addScheduleMutation = useAddSchedule();
+  const updateScheduleMutation = useUpdateSchedule();
+  const deleteScheduleMutation = useDeleteSchedule();
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [medications, setMedications] = useState([]);
   const [formData, setFormData] = useState({
     id: "",
-    name: "",
+    userId: user,
+    medicationName: "",
     startDate: "",
     endDate: "",
-    time: "",
+    intakeTimes: "",
     dosage: "",
-    frequency: "",
+    frequency: "매일",
     memo: "",
-    reminder: false,
+    reminder: true,
   });
   const [isEdit, setIsEdit] = useState(false);
+
+  const [todayMeds, setTodayMeds] = useState([]);
+  const [todayModalOpen, setTodayModalOpen] = useState(false);
+
+  const {data, error, refetch} = useUserSchedule();
+
+  useEffect(() => {
+    if (data) {
+      console.log("schedule listt", data);
+      setMedications(data);
+
+      const today = new Date();
+      const medsForToday = data.filter((med) => {
+        const start = new Date(med.startDate);
+        const end = new Date(med.endDate);
+        return today >= start && today <= end;
+      });
+
+      if (medsForToday.length > 0) {
+        setTodayMeds(medsForToday);
+        setTodayModalOpen(true); // 한 번만 오픈
+      }
+    }
+    if (error) {
+      console.error(error);
+    }
+  }, [data, error]);
+
+  useEffect(() => {
+    console.log("medications", medications);
+  }, [medications]);
 
   const openModal = (med = null) => {
     if (med) {
@@ -31,14 +72,15 @@ const PillCalendar = () => {
     } else {
       setFormData({
         id: "",
-        name: "",
+        userId: user,
+        medicationName: "",
         startDate: "",
         endDate: "",
-        time: "",
+        intakeTimes: "",
         dosage: "",
         frequency: "",
         memo: "",
-        reminder: false,
+        reminder: true,
       });
       setIsEdit(false);
     }
@@ -55,20 +97,24 @@ const PillCalendar = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEdit) {
-      setMedications((prev) =>
-        prev.map((med) => (med.id === formData.id ? formData : med))
+      updateScheduleMutation.mutate(
+        {...formData, intakeTimes: []},
+        {onSuccess: () => refetch()}
       );
     } else {
-      setMedications([...medications, {...formData, id: uuidv4()}]);
+      addScheduleMutation.mutate(
+        {...formData, intakeTimes: []},
+        {onSuccess: () => refetch()}
+      );
     }
     closeModal();
   };
 
   const handleDelete = () => {
-    setMedications((prev) => prev.filter((med) => med.id !== formData.id));
+    deleteScheduleMutation.mutate(formData.id, {onSuccess: () => refetch()});
     closeModal();
   };
 
@@ -93,7 +139,7 @@ const PillCalendar = () => {
               onClick={() => openModal(med)}
               title="약 수정/삭제"
             >
-              💊{med.name}
+              💊{med.medicationName}
             </div>
           ))}
         </div>
@@ -120,6 +166,8 @@ const PillCalendar = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="약 등록"
+        className="pill-modal"
+        overlayClassName="pill-modal-overlay"
       >
         <h3 className="medication-modal-title">
           {isEdit ? "약 정보 수정" : "약 정보 입력"}
@@ -127,9 +175,9 @@ const PillCalendar = () => {
         <form className="medication-form" onSubmit={handleSubmit}>
           <input
             className="medication-input"
-            name="name"
+            name="medicationName"
             placeholder="약 이름"
-            value={formData.name}
+            value={formData.medicationName}
             onChange={handleChange}
             required
           />
@@ -149,13 +197,13 @@ const PillCalendar = () => {
             onChange={handleChange}
             required
           />
-          <input
+          {/* <input
             className="medication-input"
-            name="time"
+            name="intakeTimes"
             type="time"
-            value={formData.time}
+            value={formData.intakeTimes}
             onChange={handleChange}
-          />
+          /> */}
           <input
             className="medication-input"
             name="dosage"
@@ -163,13 +211,13 @@ const PillCalendar = () => {
             value={formData.dosage}
             onChange={handleChange}
           />
-          <input
+          {/* <input
             className="medication-input"
             name="frequency"
             placeholder="복용 주기"
             value={formData.frequency}
             onChange={handleChange}
-          />
+          /> */}
           <textarea
             className="medication-textarea"
             name="memo"
@@ -203,6 +251,30 @@ const PillCalendar = () => {
         </form>
         <button className="medication-cancel-btn" onClick={closeModal}>
           취소
+        </button>
+      </Modal>
+
+
+
+      <Modal
+        isOpen={todayModalOpen}
+        onRequestClose={() => setTodayModalOpen(false)}
+        contentLabel="오늘의 약"
+        className="reminder-modal"
+        overlayClassName="reminder-modal-overlay"
+      >
+        <h3 className="medication-modal-title">📅 오늘 복용해야 할 약</h3>
+        {todayMeds.map((med) => (
+          <div key={med.id} className="" style={{marginBottom: "10px"}}>
+            <strong>{med.medicationName}</strong> -{" "}
+            {`${med.dosage}알` || "복용량 미입력"}
+          </div>
+        ))}
+        <button
+          className="medication-cancel-btn"
+          onClick={() => setTodayModalOpen(false)}
+        >
+          닫기
         </button>
       </Modal>
     </div>

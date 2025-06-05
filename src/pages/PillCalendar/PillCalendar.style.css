@@ -23,7 +23,7 @@
   transition: 0.2s;
 }
 
-.medication-add-btn:hover{
+.medication-add-btn:hover {
   background-color: #caa67abd;
   transition: 0.2s;
 }
@@ -40,7 +40,7 @@
 }
 
 /*달력 년월 폰트 설정*/
-.react-calendar__navigation__label__labelText{
+.react-calendar__navigation__label__labelText {
   /* font-size: 1em; */
   font-weight: bold;
 }
@@ -54,20 +54,19 @@
   margin: 4px;
 }
 
-
-
 /*타일 눌러도 색 안 바뀜*/
-.react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus{ 
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
   background: none;
   color: inherit;
 }
 
 /*타일 hover시 색 안 바뀜*/
-.react-calendar__tile:enabled:hover{
-  background:none;
+.react-calendar__tile:enabled:hover {
+  background: none;
 }
 
-.react-calendar__tile--now{
+.react-calendar__tile--now {
   background: #fbfbc5c0 !important;
 }
 
@@ -128,6 +127,26 @@
   transition: 0.3s;
 }
 
+.pill-modal-overlay {
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.pill-modal {
+  position: absolute;
+  /* inset: 10em; */
+  /* inset-inline-start: 10em;
+  inset-inline-end: 10em; */
+  inset: 2em 32em;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 1em;
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  outline: none;
+  padding: 40px;
+}
+
 .medication-form {
   display: flex;
   flex-direction: column;
@@ -163,4 +182,24 @@
 
 .medication-cancel-btn {
   background-color: #bbb;
+}
+
+.reminder-modal-overlay {
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.reminder-modal {
+  position: absolute;
+  /* inset: 10em; */
+  /* inset-inline-start: 10em;
+  inset-inline-end: 10em; */
+  inset: 12em 32em;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 1em;
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  outline: none;
+  padding: 40px;
 }
