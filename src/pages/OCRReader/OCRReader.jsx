@@ -150,11 +150,12 @@ function OCRReader() {
 
   // (선택적) 수동으로 이름 입력 후 검색하는 기능
   const handleManualDrugSearch = async () => {
-    if (!itemName.trim()) {
-      setError('검색할 약물 이름을 입력해주세요.');
-      setSearchResults([]);
-      return;
-    }
+    // if (!itemName.trim()) {
+    //   setError('검색할 약물 이름을 입력해주세요.');
+    //   setSearchResults([]);
+    //   return;
+    // }  
+
     setLoading(true);
     setError('');
     setSearchResults([]);
