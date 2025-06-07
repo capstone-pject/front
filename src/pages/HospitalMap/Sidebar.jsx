@@ -1,97 +1,78 @@
-import React, { useState } from 'react';
-import FacilityList from './FacilityList';
+import React from 'react';
 import SearchBar from './SearchBar';
 
-function Sidebar({ isOpen, toggleSidebar, searchQuery, setSearchQuery, tab, setTab, facilities, nearbyFacilities, onSearchLocation }) {
-  const [activeTab, setActiveTab] = useState('홈');
-  const [homeSearchQuery, setHomeSearchQuery] = useState('');
-  const [findSearchQuery, setFindSearchQuery] = useState('');
-
-  const handleSearchClick = () => {
-    onSearchLocation();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const { latitude, longitude } = position.coords;
-          console.log('Current location:', latitude, longitude);
-        },
-        error => console.warn('Geolocation error:', error.message)
-      );
-    }
-  };
-
-  const handleTabClick = (e, tabName) => {
-    e.stopPropagation();
-    setActiveTab(tabName);
-    handleSearchClick();
-  };
-
-  const filteredNearbyFacilities = nearbyFacilities.filter(facility =>
-    facility.name.toLowerCase().includes(homeSearchQuery.toLowerCase())
-  );
-
-  const filteredFacilities = facilities.filter(facility =>
-    facility.name.toLowerCase().includes(findSearchQuery.toLowerCase())
-  );
+function Sidebar({
+  isOpen,
+  toggleSidebar,
+  searchQuery,
+  setSearchQuery,
+  tab,
+  setTab,
+  facilities,
+  nearbyFacilities,
+  onSearchLocation,
+  searchResults,
+  onKeywordSearch,
+}) {
+  const tabs = [
+    { id: 'nearby', label: '내 주변 병원 위치 찾기' },
+    { id: 'keyword', label: '키워드 검색을 통한 병원 찾기' },
+  ];
 
   return (
-    <div className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-      <div className="sidebar-content">
-        <div className="sidebar-header">
-          <h1 className="sidebar-title">내주변 병원 약국</h1>
-        </div>
-        <div className="sidebar-tabs">
+    <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+      <div className="sidebar-header">
+        <h2 className="sidebar-title">병원 지도</h2>
+        <button className="btn-close" onClick={toggleSidebar}>
+          {isOpen ? '◀' : '▶'}
+        </button>
+      </div>
+      <div className="sidebar-tabs">
+        {tabs.map((t) => (
           <button
-            onClick={(e) => handleTabClick(e, '홈')}
-            className={`sidebar-tab ${activeTab === '홈' ? 'active' : ''}`}
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className={`sidebar-tab ${tab === t.id ? 'active' : ''}`}
           >
-            건강지도 홈 <span className="search-icon">🔍</span>
+            {t.label}
           </button>
-          <button
-            onClick={(e) => handleTabClick(e, '찾기')}
-            className={`sidebar-tab ${activeTab === '찾기' ? 'active' : ''}`}
-          >
-            병원 약국 종류별 찾기 <span className="search-icon">🔍</span>
-          </button>
-        </div>
-        {activeTab === '홈' && (
-          <div className="sidebar-section">
-            <SearchBar
-              searchQuery={homeSearchQuery}
-              setSearchQuery={setHomeSearchQuery}
-              tab={tab}
-              setTab={setTab}
-              showFilters={false}
-            />
-            <h2 className="list-title">주변 병원/약국</h2>
-            {filteredNearbyFacilities.length > 0 ? (
-              <ul className="facility-items">
-                {filteredNearbyFacilities.map(facility => (
-                  <li key={facility.id} className="facility-item">
-                    <h3 className="facility-name">{facility.name}</h3>
-                    <p className="facility-detail">유형: {facility.type}</p>
-                    <p className="facility-detail">주소: {facility.address}</p>
-                    <p className="facility-detail">거리: {facility.distance.toFixed(2)} km</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="sidebar-text">주변 병원/약국을 찾을 수 없습니다.</p>
-            )}
-          </div>
-        )}
-        {activeTab === '찾기' && (
-          <div className="sidebar-section">
-            <SearchBar
-              searchQuery={findSearchQuery}
-              setSearchQuery={setFindSearchQuery}
-              tab={tab}
-              setTab={setTab}
-              showFilters={true}
-            />
-            <FacilityList facilities={filteredFacilities} />
-          </div>
-        )}
+        ))}
+      </div>
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        tab={tab}
+        setTab={setTab}
+        showFilters={tab === 'keyword'}
+        onKeywordSearch={onKeywordSearch}
+      />
+      <div className="facility-list">
+        <h3 className="list-title"></h3>
+        <ul className="facility-items">
+          {nearbyFacilities.map(facility => (
+            <li key={facility.id} className="facility-item">
+              <span className="facility-name">{facility.name}</span>
+              <span className="facility-detail">({facility.distance.toFixed(2)}km)</span>
+            </li>
+          ))}
+        </ul>
+        <h3 className="list-title"></h3>
+        <ul className="facility-items">
+          {facilities.map(facility => (
+            <li key={facility.id} className="facility-item">
+              <span className="facility-name">{facility.name}</span>
+            </li>
+          ))}
+        </ul>
+        <h3 className="list-title">주변 병원</h3>
+        <ul className="facility-items hospitals">
+          {searchResults.map(hospital => (
+            <li key={hospital.id} className="facility-item">
+              <span className="facility-name">{hospital.name}</span>
+              <span className="facility-detail">{hospital.address}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

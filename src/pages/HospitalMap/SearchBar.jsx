@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function SearchBar({ searchQuery, setSearchQuery, tab, setTab, showFilters }) {
+function SearchBar({ searchQuery, setSearchQuery, tab, setTab, showFilters, onKeywordSearch }) {
   const specialties = [
     'all', '가정의학과', '결핵과', '내과', '마취통증의학과', '방사선종양학과', '병리과', '비뇨의학과', 
     '산부인과', '성형외과', '소아청소년과', '신경과', '신경외과', '안과', '영상의학과', '예방의학과', 
@@ -8,16 +8,39 @@ function SearchBar({ searchQuery, setSearchQuery, tab, setTab, showFilters }) {
     '진단검사의학과', '피부과', '핵의학과', '흉부외과'
   ];
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && onKeywordSearch) {
+      onKeywordSearch(searchQuery);
+    }
+  };
+
+  const handleSearchClick = () => {
+    if (onKeywordSearch) {
+      onKeywordSearch(searchQuery);
+    }
+  };
+
   return (
     <div className="search-bar">
       <div className="search-bar-inputs">
         <input
           type="text"
-          placeholder="병원명 또는 약국명 입력"
+          placeholder="병원명 또는 키워드 입력"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearch}
+          onKeyPress={handleKeyPress}
           className="search-input"
         />
+        <button 
+          onClick={handleSearchClick} 
+          className="search-button"
+        >
+          🔍
+        </button>
       </div>
       {showFilters && (
         <div className="search-bar-tabs">

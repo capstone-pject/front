@@ -7,14 +7,13 @@ import sampleData from './sampleData.json';
 function HospitalMap() {
   const [facilities, setFacilities] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [tab, setTab] = useState('nearby'); // 기본 탭을 '내 주변 병원 위치 찾기'로 설정
+  const [tab, setTab] = useState('nearby');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [mapLevel, setMapLevel] = useState(5);
   const [userLocation, setUserLocation] = useState(null);
   const [nearbyHospitals, setNearbyHospitals] = useState([]);
 
   useEffect(() => {
-    // 위치 정보를 받아 초기 지도 설정
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -23,23 +22,21 @@ function HospitalMap() {
         },
         (error) => {
           console.warn('Geolocation error:', error.message);
-          setUserLocation({ lat: 37.5665, lng: 126.9780 }); // 기본 서울 좌표
+          setUserLocation({ lat: 37.5665, lng: 126.9780 });
         }
       );
     } else {
-      setUserLocation({ lat: 37.5665, lng: 126.9780 }); // Geolocation 지원 안 될 경우 기본 좌표 사용
+      setUserLocation({ lat: 37.5665, lng: 126.9780 });
     }
     setFacilities([]);
   }, []);
 
-  // userLocation 또는 tab 변경 시 주변 병원 로드
   useEffect(() => {
     if (userLocation && tab === 'nearby') {
       fetchNearbyHospitals(userLocation.lat, userLocation.lng, '');
     }
   }, [userLocation, tab]);
 
-  // 주변 병원 데이터 가져오기
   const fetchNearbyHospitals = (latitude, longitude, keyword = '') => {
     if (!window.kakao || !window.kakao.maps) {
       console.error('Kakao Maps API가 로드되지 않았습니다.');
@@ -50,9 +47,9 @@ function HospitalMap() {
     const location = new window.kakao.maps.LatLng(latitude, longitude);
     const options = {
       location: location,
-      radius: 5000, // 5km 반경
-      size: 15, // 최대 15개 결과
-      category_group_code: 'HP8', // 병원 카테고리
+      radius: 5000,
+      size: 15,
+      category_group_code: 'HP8',
     };
 
     ps.keywordSearch(keyword || '병원', (data, status) => {
@@ -74,14 +71,14 @@ function HospitalMap() {
   };
 
   const calculateDistance = (lat1, lng1, lat2, lng2) => {
-    const R = 6371; // Earth's radius in km
+    const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLng = (lng2 - lng1) * (Math.PI / 180);
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
               Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
               Math.sin(dLng / 2) * Math.sin(dLng / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c; // Distance in km
+    return R * c;
   };
 
   const nearbyFacilities = userLocation
@@ -90,7 +87,7 @@ function HospitalMap() {
           ...facility,
           distance: calculateDistance(userLocation.lat, userLocation.lng, facility.lat, facility.lng),
         }))
-        .filter(facility => facility.distance <= 5) // 5km 이내
+        .filter(facility => facility.distance <= 5)
         .sort((a, b) => a.distance - b.distance)
     : [];
 
@@ -122,7 +119,7 @@ function HospitalMap() {
       <button 
         className="sidebar-toggle" 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        style={{ left: isSidebarOpen ? '325px' : '5px' }} /* 동적 left 조정 */
+        style={{ left: isSidebarOpen ? '340px' : '5px' }}
       >
         {isSidebarOpen ? '◀' : '▶'}
       </button>

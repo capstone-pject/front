@@ -1,67 +1,119 @@
 import React, { useEffect, useRef } from 'react';
 
-function Map({ facilities, mapLevel, onZoom }) {
+function Map({ facilities = [], mapLevel, onZoom, searchResults = [], userLocation }) {
   const mapRef = useRef(null);
+  const infowindowRef = useRef(null);
+  const markerInfowindowMap = useRef(new WeakMap());
 
   useEffect(() => {
-    const container = mapRef.current;
+    if (!window.kakao || !window.kakao.maps) {
+      console.error('Kakao Maps API가 로드되지 않았습니다.');
+      return;
+    }
+
+    const container = document.getElementById('map');
+    const center = userLocation 
+      ? new window.kakao.maps.LatLng(userLocation.lat, userLocation.lng)
+      : new window.kakao.maps.LatLng(37.5665, 126.9780);
     const options = {
-      center: new window.kakao.maps.LatLng(37.5665, 126.9780),
+      center: center,
       level: mapLevel,
     };
     const map = new window.kakao.maps.Map(container, options);
+    mapRef.current = map;
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const { latitude, longitude } = position.coords;
-          const userPosition = new window.kakao.maps.LatLng(latitude, longitude);
-          map.setCenter(userPosition);
+    infowindowRef.current = new window.kakao.maps.InfoWindow({ zIndex: 1 });
 
-          const markerImage = new window.kakao.maps.MarkerImage(
-            'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"%3E%3Ccircle cx="8" cy="8" r="6" fill="%23FF0000" /%3E%3C/svg%3E',
-            new window.kakao.maps.Size(10, 10)
-          );
-          const userMarker = new window.kakao.maps.Marker({
-            position: userPosition,
-            image: markerImage,
-          });
-          userMarker.setMap(map);
-        },
-        error => console.warn('Geolocation error:', error.message)
+    if (userLocation) {
+      const userPosition = new window.kakao.maps.LatLng(userLocation.lat, userLocation.lng);
+      const markerImage = new window.kakao.maps.MarkerImage(
+        'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        new window.kakao.maps.Size(32, 32),
+        { offset: new window.kakao.maps.Point(16, 16) }
       );
+      new window.kakao.maps.Marker({
+        position: userPosition,
+        map: map,
+        image: markerImage,
+        title: '내 위치',
+      });
     }
 
-    // 의료기관 마커
-    facilities.forEach(facility => {
-      const markerPosition = new window.kakao.maps.LatLng(facility.lat, facility.lng);
-      const marker = new window.kakao.maps.Marker({ position: markerPosition });
-      marker.setMap(map);
+    const markers = [];
+    if (facilities && Array.isArray(facilities)) {
+      facilities.forEach(facility => {
+        const markerPosition = new window.kakao.maps.LatLng(facility.lat, facility.lng);
+        const marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+          map: map,
+          title: facility.name,
+        });
+        markers.push(marker);
 
-      const infowindow = new window.kakao.maps.InfoWindow({
-        content: `
-          <div style="padding:10px; font-size:18px; max-width:200px;">
-            <h3 style="font-size:20px; font-weight:bold;">${facility.name}</h3>
-            <p>유형: ${facility.type}</p>
-            <p>주소: ${facility.address}</p>
-          </div>`,
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          const infowindow = infowindowRef.current;
+          const isOpen = markerInfowindowMap.current.get(marker);
+
+          if (isOpen) {
+            infowindow.close();
+            markerInfowindowMap.current.delete(marker);
+          } else {
+            infowindow.setContent(`
+              <div style="padding:5px; text-align:center;">
+                <strong>${facility.name}</strong><br>${facility.address || '주소 없음'}
+              </div>
+            `);
+            infowindow.open(map, marker);
+            markerInfowindowMap.current.set(marker, true);
+          }
+        });
       });
-      window.kakao.maps.event.addListener(marker, 'click', () => {
-        infowindow.open(map, marker);
+    }
+
+    if (searchResults && Array.isArray(searchResults) && searchResults !== facilities) {
+      searchResults.forEach(result => {
+        const markerPosition = new window.kakao.maps.LatLng(result.lat, result.lng);
+        const marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+          map: map,
+          title: result.name,
+        });
+        markers.push(marker);
+
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          const infowindow = infowindowRef.current;
+          const isOpen = markerInfowindowMap.current.get(marker);
+
+          if (isOpen) {
+            infowindow.close();
+            markerInfowindowMap.current.delete(marker);
+          } else {
+            infowindow.setContent(`
+              <div style="padding:5px; text-align:center;">
+                <strong>${result.name}</strong><br>${result.address || '주소 없음'}
+              </div>
+            `);
+            infowindow.open(map, marker);
+            markerInfowindowMap.current.set(marker, true);
+          }
+        });
       });
+    }
+
+    const zoomControl = new window.kakao.maps.ZoomControl();
+    map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
+
+    window.kakao.maps.event.addListener(map, 'zoom_changed', () => {
+      onZoom(map.getLevel() < mapLevel);
     });
-  }, [facilities, mapLevel]);
 
-  return (
-    <div className="map">
-      <div className="map-controls">
-        <button onClick={() => onZoom(true)} className="zoom-in">+</button>
-        <button onClick={() => onZoom(false)} className="zoom-out">-</button>
-        <button className="layer-toggle">레이어</button>
-      </div>
-      <div ref={mapRef} className="map-canvas"></div>
-    </div>
-  );
+    return () => {
+      markers.forEach(marker => marker.setMap(null));
+      if (infowindowRef.current) infowindowRef.current.close();
+    };
+  }, [facilities, mapLevel, searchResults, onZoom, userLocation]);
+
+  return <div id="map" className="map"></div>;
 }
 
 export default Map;
