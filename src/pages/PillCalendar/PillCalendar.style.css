@@ -203,3 +203,8 @@
   outline: none;
   padding: 40px;
 }
+
+.reminder-modal-bottom-section{
+  display:flex;
+  justify-content: space-between;
+}
