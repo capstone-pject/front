@@ -52,7 +52,7 @@ const PillCalendar = () => {
       setMedications(data);
 
       const todayKey = getTodayKey();
-      const alreadySeen = localStorage.getItem("hideTodayPillModal");
+      const alreadySeen = sessionStorage.getItem("hideTodayPillModal");
 
       const today = new Date();
       const medsForToday = data.filter((med) => {
@@ -141,9 +141,9 @@ const PillCalendar = () => {
     setDoNotShowToday(checked);
 
     if (checked) {
-      localStorage.setItem("hideTodayPillModal", getTodayKey());
+      sessionStorage.setItem("hideTodayPillModal", getTodayKey());
     } else {
-      localStorage.removeItem("hideTodayPillModal");
+      sessionStorage.removeItem("hideTodayPillModal");
     }
   };
 
@@ -300,13 +300,14 @@ const PillCalendar = () => {
               marginTop: "1rem",
               display: "flex",
               alignItems: "center",
-              gap: "8px",
+              // gap: "8px",
             }}
           >
             <input
               type="checkbox"
               checked={doNotShowToday}
               onChange={handleDoNotShowTodayChange}
+              style={{margin:0, marginRight:5, marginTop: 2,}}
             />
             오늘 더 이상 보지 않기
           </label>
