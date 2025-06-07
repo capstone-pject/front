@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SearchBar from '\src\pages\HospitalMap./SearchBar';
-import FacilityList from '\src\pages\HospitalMap./FacilityList';
+import FacilityList from './FacilityList';
+import SearchBar from './SearchBar';
 
 function Sidebar({ isOpen, toggleSidebar, searchQuery, setSearchQuery, tab, setTab, facilities, nearbyFacilities, onSearchLocation }) {
   const [activeTab, setActiveTab] = useState('홈');
