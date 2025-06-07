@@ -32,7 +32,6 @@ function Map({ facilities, mapLevel, onZoom }) {
       );
     }
 
-    // 의료기관 마커
     facilities.forEach(facility => {
       const markerPosition = new window.kakao.maps.LatLng(facility.lat, facility.lng);
       const marker = new window.kakao.maps.Marker({ position: markerPosition });
