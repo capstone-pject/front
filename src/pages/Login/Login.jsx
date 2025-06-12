@@ -15,7 +15,7 @@ const Login = () => {
     const loginMutation = useLogin();
   
   if(user){
-    navigate("/");
+    navigate("/map");
   }
 
   const handleChange = (e) => {
