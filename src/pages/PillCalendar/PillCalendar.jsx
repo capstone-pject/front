@@ -259,10 +259,10 @@ const PillCalendar = () => {
             />
             알림 받기
           </label>
-          <div style={{display: "flex", gap: "10px"}}>
-            <button className="medication-submit-btn" type="submit">
-              {isEdit ? "수정" : "등록"}
-            </button>
+          <button className="medication-submit-btn" type="submit">
+            {isEdit ? "수정" : "등록"}
+          </button>
+          <div style={{display: "flex", gap: "10px", alignSelf:"flex-end"}}>
             {isEdit && (
               <button
                 type="button"
@@ -272,11 +272,11 @@ const PillCalendar = () => {
                 삭제
               </button>
             )}
+            <button className="medication-cancel-btn" onClick={closeModal}>
+              취소
+            </button>
           </div>
         </form>
-        <button className="medication-cancel-btn" onClick={closeModal}>
-          취소
-        </button>
       </Modal>
 
       <Modal
@@ -286,13 +286,16 @@ const PillCalendar = () => {
         className="reminder-modal"
         overlayClassName="reminder-modal-overlay"
       >
-        <h3 className="medication-modal-title">📅 오늘 복용해야 할 약</h3>
-        {todayMeds.map((med) => (
-          <div key={med.id} className="" style={{marginBottom: "10px"}}>
-            <strong>{med.medicationName}</strong> -{" "}
-            {`${med.dosage}알` || "복용량 미입력"}
-          </div>
-        ))}
+        <div>
+          <h3 className="medication-modal-title">📅 오늘 복용해야 할 약</h3>
+          {todayMeds.map((med) => (
+            <div key={med.id} className="" style={{marginBottom: "10px"}}>
+              <strong>{med.medicationName}</strong> -{" "}
+              {`${med.dosage}알` || "복용량 미입력"}
+            </div>
+          ))}
+        </div>
+
         <div className="reminder-modal-bottom-section">
           <label
             className="medication-label"
@@ -307,7 +310,7 @@ const PillCalendar = () => {
               type="checkbox"
               checked={doNotShowToday}
               onChange={handleDoNotShowTodayChange}
-              style={{margin:0, marginRight:5, marginTop: 2,}}
+              style={{margin: 0, marginRight: 5, marginTop: 2}}
             />
             오늘 더 이상 보지 않기
           </label>

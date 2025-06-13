@@ -138,13 +138,16 @@
   /* inset: 10em; */
   /* inset-inline-start: 10em;
   inset-inline-end: 10em; */
-  inset: 2em 32em;
+  /* inset: 2em 32em; */
+  inset: 9vh 35vw;
   border: 1px solid rgb(204, 204, 204);
   border-radius: 1em;
   background: rgb(255, 255, 255);
   overflow: auto;
   outline: none;
   padding: 40px;
+  display:flex;
+  flex-direction: column;
 }
 
 .medication-form {
@@ -195,16 +198,21 @@
   /* inset: 10em; */
   /* inset-inline-start: 10em;
   inset-inline-end: 10em; */
-  inset: 12em 32em;
+  /* inset: 12em 32em; */
+  inset: 25vh 30vw;
   border: 1px solid rgb(204, 204, 204);
   border-radius: 1em;
   background: rgb(255, 255, 255);
   overflow: auto;
   outline: none;
-  padding: 40px;
+  padding: 2.5em;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .reminder-modal-bottom-section{
   display:flex;
   justify-content: space-between;
+  /* align-self: flex-end; */
 }
