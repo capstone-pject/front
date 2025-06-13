@@ -1,0 +1,173 @@
+.calendar-page{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 16em;
+    padding-right: 16em;
+    /* background-color: black; */
+    padding-top: 4em;
+}
+
+.calendar-container{
+    /* width: 40%; */
+}
+
+.custom-calendar{
+    width: 40em;
+    /* height: 30em; */
+}
+
+.tile-design{
+    /* width: 6em; */
+    height: 6em;
+    border: 1px solid black;
+}
+
+
+.calendar-page .react-calendar__tile {
+    width: 6em;
+  position: relative;
+  border: 1px solid black;
+  /* border-radius: 8px; */
+  padding: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.react-calendar__tile abbr {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 0.8em;
+}
+
+/* .react-calendar button{
+    border: 1px solid black
+} */
+
+
+
+
+
+
+
+
+
+
+
+.medication-wrapper {
+  padding: 40px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9ff;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.medication-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.medication-add-btn {
+  background-color: #4a90e2;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.medication-add-btn:hover {
+  background-color: #3b7acb;
+}
+
+.medication-calendar-container {
+  transform: scaleX(1.5);
+  transform-origin: left;
+}
+
+.react-calendar__tile {
+  height: 90px !important;
+  vertical-align: top;
+  position: relative;
+  padding: 5px;
+}
+
+.medication-tile-inner {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.medication-tile-date {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 12px;
+  color: #333;
+}
+
+.medication-pill-box {
+  background-color: #f1f8ff;
+  color: #333;
+  border-left: 4px solid #4a90e2;
+  border-radius: 6px;
+  margin-top: 18px;
+  padding: 4px 6px;
+  font-size: 13px;
+  cursor: pointer;
+  word-wrap: break-word;
+}
+
+.medication-modal-title {
+  margin-bottom: 16px;
+  font-size: 22px;
+}
+
+.medication-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.medication-input,
+.medication-textarea {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.medication-textarea {
+  resize: vertical;
+  height: 60px;
+}
+
+.medication-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.medication-submit-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.medication-cancel-btn {
+  background-color: #e57373;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  margin-top: 8px;
+  cursor: pointer;
+}
