@@ -14,10 +14,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
-        <Route index element={<Homepage />} />
-        {/* <Route index element={<Homepage/>}/> */}
         <Route element={<PrivateRoute/>}>
-          <Route path="calendar" element={<PillCalendar />} />
+          <Route index element={<PillCalendar />} />
         </Route>
         <Route path="map" element={<HospitalMap />} />
         <Route path="info" element={<DiseaseInfo />} />

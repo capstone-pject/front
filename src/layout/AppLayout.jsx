@@ -14,9 +14,9 @@ const AppLayout = () => {
   const {user, setUser} = userStore();
 
   const buttonList = [
-    {title: "병원지도", image: hospitalIcon},
     {title: "약 달력", image: calendarIcon},
-    {title: "약 알아보기", image: pillIcon},
+    {title: "병원지도", image: hospitalIcon},
+    // {title: "약 알아보기", image: pillIcon},
     {title: "사진으로 약 찾기", image: cameraIcon},
   ];
 
@@ -27,7 +27,7 @@ const AppLayout = () => {
     if(buttonTitle==="병원지도") {
       navigate("/map");
     }else if(buttonTitle==="약 달력") {
-      navigate("/calendar");
+      navigate("/");
     }else if(buttonTitle==="약 알아보기") {
       navigate("/info"); 
     }else if(buttonTitle==="사진으로 약 찾기") {
