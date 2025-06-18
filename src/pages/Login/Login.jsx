@@ -15,7 +15,7 @@ const Login = () => {
     const loginMutation = useLogin();
   
   if(user){
-    navigate("/");
+    navigate("/calendar");
   }
 
   const handleChange = (e) => {
@@ -35,23 +35,22 @@ const Login = () => {
   return (
     <div className="login-page">
       <form onSubmit={handleSubmit} className="login-box">
-        <div className="login-title">로그인</div>
+        <div className="login-title">약(藥)속해요</div>
 
-        <div className="login-row">
-          <div className="login-row-name">아이디</div>
           <input name="userId"
           value={loginData.userId}
-          onChange={handleChange}/>
-        </div>
+          onChange={handleChange}
+          placeholder="아이디"
+          className="login-row-input"/>
 
-        <div className="login-row">
-          <div className="login-row-name">비밀번호</div>
           <input type="password"
           name="password"
           value={loginData.password}
-          onChange={handleChange}/>
-        </div>
-        <button type="submit">로그인</button>
+          onChange={handleChange}
+          placeholder="비밀번호"
+          className="login-row-input"/>
+        <button type="submit" className="login-button">로그인</button>
+        <div onClick={()=>navigate("/register")} className="login-register-button">회원가입</div>
       </form>
     </div>
   );

@@ -24,7 +24,7 @@ html, body, #root {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: #0053a0;
+  background-color: #a0825d;
   color: white;
   border: none;
   border-radius: 0 4px 4px 0;
@@ -37,9 +37,9 @@ html, body, #root {
 }
 
 .sidebar {
-  background-color: #0053a0;
+  background-color: #6e583d;
   color: white;
-  height: 100vh;
+  height: 90vh;
   width: 320px;
   transition: transform 0.3s ease;
   position: fixed;
@@ -47,6 +47,7 @@ html, body, #root {
   left: 0;
   z-index: 10;
   padding: 16px;
+  margin-top: 8vh;
 }
 
 .sidebar.closed {
@@ -89,7 +90,7 @@ html, body, #root {
   width: 100%;
   padding: 8px;
   text-align: left;
-  background-color: #004d91;
+  background-color: #d9c5aa;
   border: none;
   border-radius: 4px;
   color: white;
@@ -101,7 +102,7 @@ html, body, #root {
 }
 
 .sidebar-tab.active {
-  background-color: #003e7a;
+  background-color: #d9c5aa;
 }
 
 .search-bar {
@@ -129,7 +130,7 @@ html, body, #root {
 
 .search-button {
   padding: 8px 12px;
-  background-color: #0053a0;
+  background-color: #d9c5aa;
   color: white;
   border: none;
   border-radius: 4px;
@@ -142,8 +143,8 @@ html, body, #root {
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  padding-bottom: 4px;
-  padding-top: 4px;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .search-tab {
@@ -152,7 +153,8 @@ html, body, #root {
   color: #333;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 1em;
+  font-weight: 450;
   white-space: nowrap;
   cursor: pointer;
 }

@@ -16,7 +16,7 @@ function Sidebar({
 }) {
   const tabs = [
     { id: 'nearby', label: '내 주변 병원 위치 찾기' },
-    { id: 'keyword', label: '키워드 검색을 통한 병원 찾기' },
+    { id: 'keyword', label: '증상을 통한 병원 찾기' },
   ];
 
   return (
