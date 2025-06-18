@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import mapStore from '../../stores/mapStore';
 
 function SearchBar({ searchQuery, setSearchQuery, tab, setTab, showFilters, onKeywordSearch }) {
   // const specialties = [
@@ -7,6 +8,8 @@ function SearchBar({ searchQuery, setSearchQuery, tab, setTab, showFilters, onKe
   //   '외과응급의학과', '이비인후과', '재활의학과', '정신건강의학과', '정형외과', '직업환경의학과', 
   //   '진단검사의학과', '피부과', '핵의학과', '흉부외과'
   // ];
+  const {setSearchCategory} = mapStore();
+
   const specialties = [
     {symptom:"🤧기침이 나요",dept:"내과"},
     {symptom:"🦵관절이 아파요",dept:"정형외과"},
@@ -24,12 +27,14 @@ function SearchBar({ searchQuery, setSearchQuery, tab, setTab, showFilters, onKe
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && onKeywordSearch) {
+      setSearchCategory(searchQuery);
       onKeywordSearch(searchQuery);
     }
   };
 
   const handleSearchClick = () => {
     if (onKeywordSearch) {
+      setSearchCategory(searchQuery);
       onKeywordSearch(searchQuery);
     }
   };
@@ -40,6 +45,7 @@ function SearchBar({ searchQuery, setSearchQuery, tab, setTab, showFilters, onKe
       console.log("tab",tab)
       setTab(tab?.symptom);
       onKeywordSearch(tab?.dept);
+      setSearchCategory(tab?.dept);
     }
   }
 

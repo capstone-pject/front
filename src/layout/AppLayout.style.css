@@ -62,7 +62,8 @@
 .navbar-login-button{
     border:none;
     background: none;
-    color: #8e7558bd;
+    color: #8f5614bd;
+    font-size: 1.2em;
     font-weight: bold;
     cursor: pointer;
 }
